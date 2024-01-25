@@ -11,7 +11,8 @@ from PIL import Image
 from torch.utils.data import DataLoader, Dataset
 from torch.utils.data.dataset import Dataset
 from torchvision import datasets, transforms
-
+import pandas as pd
+from sklearn.model_selection import train_test_split
 
 def other_class(n_classes, current_class):
     """
@@ -63,6 +64,7 @@ def mislabel(y, noise_type, noise_rate, noise_pairs=None, seed=None):
 
 class DatasetGenerator():
     def __init__(self,
+                 dataframe,
                  train_batch_size=128,
                  eval_batch_size=256,
                  data_path='data/',
@@ -83,6 +85,7 @@ class DatasetGenerator():
         self.noise_rate = noise_rate
         self.dataset = dataset
         self.noise_type = noise_type
+        self.dataframe = dataframe
         self.data_loaders = self.loadData()
 
     def getDataLoader(self):
@@ -164,6 +167,36 @@ class DatasetGenerator():
             ])
             train_dataset = Animal10(data_path=self.data_path, split='train', transform=train_transform,cutmix=self.cutmix)
             test_dataset = Animal10(data_path=self.data_path, split='test', transform=test_transform)
+
+        elif self.dataset = 'custom':
+            MEAN = [0.746, 0.7195, 0.711] 
+            STD = [0.318, 0.329, 0.331]
+
+            train_transform = transforms.Compose([
+                transforms.Resize((224,224)),
+                transforms.RandomHorizontalFlip(),
+                transforms.ToTensor(),
+                transforms.Normalize(MEAN, STD)])
+
+            test_transform = transforms.Compose([
+                transforms.Resize((224,224)),
+                transforms.ToTensor(),
+                transforms.Normalize(MEAN, STD)])
+
+            train_dataset = CustomDataset(
+                root=self.data_path,
+                dataframe = self.dataframe,
+                train = True,
+                transform=train_transform,
+                cutmix=self.cutmix,
+                num_class = 7
+                )
+
+            test_dataset = CustomDataset(
+                root=self.data_path,
+                dataframe = self.dataframe,
+                train = False,
+                transform=test_transform)
 
         elif self.dataset == 'WebVision':
             MEAN = [0.485, 0.456, 0.406]
@@ -463,7 +496,7 @@ class ImageNetVal(Dataset):
             self.val_data = []
             self.transform = transform
             paths = os.listdir(self.path)
-            paths.sort()
+            paths.sort() 
             with open(root_dir+'ILSVRC2012_validation_ground_truth.txt', 'r') as f:
                 lines = f.read().splitlines()
                 lines = [int(l.split()[0]) for l in lines]
@@ -479,3 +512,63 @@ class ImageNetVal(Dataset):
         
         def __len__(self):
             return len(self.val_data)
+
+class CustomDataset(Dataset):
+    def __init__(self, root, dataframe, train=True, transform=None, target_transform=None, cutmix=False, num_class=7):
+        self.root = root.lower()
+        self.transform = transform
+        self.target_transform = target_transform
+        self.cutmix = cutmix
+        self.train = train
+        self.dataframe = dataframe
+
+        # Define a function to sample n rows from each group
+        def sample_n_rows(group, n):
+            return group.sample(n) if not group.empty and len(group) >= n else pd.DataFrame()
+
+        num_samples_per_class = int(self.dataframe.groupby('label').size().min()*0.2)
+        val_df = self.dataframe.groupby('label', group_keys=False, as_index=False).apply(lambda group: sample_n_rows(group, num_samples_per_class)) 
+        val_df = val_df.reset_index(drop=True)
+        train_df = df.merge(val_df, how='left', indicator=True).query('_merge == "left_only"').drop('_merge', axis=1)
+        print(f'original dataframe of length {len(df)} split into two dataframes train of length {len(train_df)} and test of length {len(val_df)}')
+        num_images = train_df.groupby('label').size().to_dict()
+        
+        if self.train:
+            self.data = train_df['file_name'].to_list()
+            self.mislabeled_targets = train_df['label'].to_list()
+        else:
+            self.data = val_df['file_name'].to_list()
+            self.targets = val_df['label'].to_list()
+        
+    def __getitem__(self, index):
+
+        if self.train:
+            img, target = self.data[index], self.mislabeled_targets[index]
+        else:
+            img, target = self.data[index], self.targets[index]
+
+        # doing this so that it is consistent with all other datasets
+        # to return a PIL Image
+        if self.train:
+            img_origin = Image.open(os.path.join(self.root, img)).convert('RGB')
+        else:
+            img_origin = Image.open(os.path.join(self.root, img)).convert('RGB')
+            
+
+        if self.transform is not None:
+            img = self.transform(img_origin)
+            if self.cutmix:
+                img1 = self.transform(img_origin)
+
+        if self.target_transform is not None:
+            target = self.target_transform(target)
+
+        if self.train:
+            if self.cutmix:
+                return img, img1, target, index
+            return img, target, index
+        else:
+            return img, target
+
+    def __len__(self):
+        return len(self.data)
