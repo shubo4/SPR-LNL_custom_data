@@ -168,7 +168,7 @@ class DatasetGenerator():
             train_dataset = Animal10(data_path=self.data_path, split='train', transform=train_transform,cutmix=self.cutmix)
             test_dataset = Animal10(data_path=self.data_path, split='test', transform=test_transform)
 
-        elif self.dataset = 'custom':
+        elif self.dataset == 'custom':
             MEAN = [0.746, 0.7195, 0.711] 
             STD = [0.318, 0.329, 0.331]
 
