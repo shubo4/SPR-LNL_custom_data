@@ -10,6 +10,7 @@ def config():
     parser.add_argument('--config_file', type=str, default= './configs/cifar10.yaml', help='predefined configs')
 
     # Data
+    parser.add_argument('--dataframe_path', type=str, default="/kaggle/input/extracting-attributes-from-fashion-images-jan-2024/train.csv", help='Dataframe for labels and image names')
     parser.add_argument('--dataset', type=str, default="CIFAR10", metavar='DATA', help='Dataset: MNIST, CIFAR10, ANIMAL10, WebVision')
     parser.add_argument('--root', type=str, default="../data", help='Data root')
     parser.add_argument('--noise_type', type=str, default='clean', help='Noise type: clean, symmetric, asymmetric')
