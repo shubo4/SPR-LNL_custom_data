@@ -7,7 +7,7 @@ def config():
     # Experiment
     parser.add_argument('--overwrite', default=False, help='Overwrite existed log path, only used for debugging')
     parser.add_argument("--tqdm", type=int, default=0, help='Monitoring the training process')
-    parser.add_argument('--config_file', type=str, default=None, help='predefined configs')
+    parser.add_argument('--config_file', type=str, default= './configs/cifar10.yaml', help='predefined configs')
 
     # Data
     parser.add_argument('--dataset', type=str, default="CIFAR10", metavar='DATA', help='Dataset: MNIST, CIFAR10, ANIMAL10, WebVision')
@@ -53,10 +53,11 @@ def config():
     parser.add_argument('--cutmix', type=int, default=None, help='Flag of using CutMix strategy')
     parser.add_argument('--cutmix_prob', type=float, default=None, help='Probability of using CutMix strategy')
 
-    args = parser.parse_args()
+
+    args, _ = parser.parse_known_args()
 
     # make sure the setting of noise rate and noise type are consistent
-    assert not (args.noise_rate == 0.0) ^ (args.noise_type == 'clean'), 'Contradictory setting of noise tyoe and noise rate'
+    assert not (args.noise_rate == 0.0) ^ (args.noise_type == 'clean'), 'Contradictory setting of noise type and noise rate'
 
     # load the configs from the yaml file if it is not specified in the command line
     assert args.config_file is not None, 'Please load a config file!'
