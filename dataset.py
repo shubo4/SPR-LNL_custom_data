@@ -529,8 +529,8 @@ class CustomDataset(Dataset):
         num_samples_per_class = int(self.dataframe.groupby('label').size().min()*0.2)
         val_df = self.dataframe.groupby('label', group_keys=False, as_index=False).apply(lambda group: sample_n_rows(group, num_samples_per_class)) 
         val_df = val_df.reset_index(drop=True)
-        train_df = df.merge(val_df, how='left', indicator=True).query('_merge == "left_only"').drop('_merge', axis=1)
-        print(f'original dataframe of length {len(df)} split into two dataframes train of length {len(train_df)} and test of length {len(val_df)}')
+        train_df = self.dataframe.merge(val_df, how='left', indicator=True).query('_merge == "left_only"').drop('_merge', axis=1)
+        print(f'original dataframe of length {len(self.dataframe)} split into two dataframes train of length {len(train_df)} and test of length {len(val_df)}')
         num_images = train_df.groupby('label').size().to_dict()
         
         if self.train:
