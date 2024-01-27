@@ -15,7 +15,8 @@ device = 'cuda:0' if torch.cuda.is_available()  else 'cpu'
 if args.seed is not None:
     set_seed(args.seed)
 
-data_loader = DatasetGenerator(data_path=os.path.join(args.root, args.dataset),
+data_loader = DatasetGenerator(dataframe = args.dataframe,
+                               data_path=os.path.join(args.root, args.dataset),
                                num_of_workers=args.num_workers,
                                seed=args.seed,
                                train_batch_size=args.batch_size,
@@ -24,10 +25,10 @@ data_loader = DatasetGenerator(data_path=os.path.join(args.root, args.dataset),
                                noise_rate=args.noise_rate,
                                cutmix=args.cutmix,
                                ).getDataLoader()
+
 test_loader = data_loader['test_dataset']
 if args.dataset == 'WebVision':
     test_loader_imagenet = data_loader['test_imagenet']
-
 if args.backbone == 'conv2':
     from models.models import CNN
     model = CNN(type=args.backbone, num_classes=args.num_classes, show=True)
