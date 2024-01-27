@@ -61,6 +61,10 @@ elif args.backbone == 'inception':
     from models.inception import InceptionResNetV2
     model = InceptionResNetV2(num_classes=args.num_classes, show=True)
     nFeat = 1536
+elif args.backbone == 'res50':
+    from models.resnet_cifar import resnet50
+    model = resnet50()
+    nFeat = 2048
 else:
     raise NameError
 
