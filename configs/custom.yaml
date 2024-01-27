@@ -2,7 +2,7 @@ in_channels : 3
 num_classes : 7
 lr : 0.01
 weight_decay : 0.0005
-batch_size : 32
+batch_size : 128
 epochs : 10
 norm : 0.2
 lamb : 1.2
