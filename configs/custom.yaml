@@ -8,7 +8,7 @@ norm : 0.2
 lamb : 1.2
 freq : 1
 rho : 1.02
-backbone : 'res50'
+backbone : 'res18'
 optimizer : 'sgd'
 momentum : 0.9
 scheduler : 'cos'
