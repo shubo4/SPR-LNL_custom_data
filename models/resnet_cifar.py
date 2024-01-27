@@ -76,7 +76,7 @@ class BottleNeck(nn.Module):
 
 class ResNet(nn.Module):
 
-    def __init__(self, block, num_block, num_classes=100, show=False, cosine=0):
+    def __init__(self, block, num_block, num_classes=7, show=False, cosine=0):
         super().__init__()
 
         self.in_channels = 64   
