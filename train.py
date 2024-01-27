@@ -32,7 +32,7 @@ if os.path.exists(args.save_dir) and args.overwrite:
 writter = SummaryWriter(args.save_dir)
 
 data_loader = DatasetGenerator(dataframe = pd.read_csv(args.dataframe_path),
-                               data_path=os.path.join(args.root, args.dataset),
+                               data_path= args.root,#os.path.join(args.root, args.dataset),
                                num_of_workers=args.num_workers,
                                seed=args.seed,
                                train_batch_size=args.batch_size,
