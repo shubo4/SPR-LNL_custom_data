@@ -49,7 +49,7 @@ if args.backbone == 'conv2':
     from models.models import CNN
     model = CNN(type=args.backbone, num_classes=args.num_classes, show=True)
     nFeat = 128
-elif args.backbone == 'res18' and 'CIFAR' in args.dataset:
+elif args.backbone == 'res18':
     from models.resnet_cifar import resnet18
     model = resnet18(num_classes=args.num_classes, show=True)
     nFeat = 512
