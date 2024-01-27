@@ -41,6 +41,10 @@ elif args.backbone == 'vgg':
     from models.vgg import vgg19_bn
     model = vgg19_bn(num_classes=args.num_classes, pretrained=False, show=True)
     nFeat = 4096
+elif args.backbone == 'res50':
+    from models.resnet_cifar import resnet50
+    model = resnet50()
+    nFeat = 2048
 elif args.backbone == 'inception':
     from models.inception import InceptionResNetV2
     model = InceptionResNetV2(num_classes=args.num_classes, show=True)
