@@ -515,7 +515,7 @@ class ImageNetVal(Dataset):
 
 class CustomDataset(Dataset):
     def __init__(self, root, dataframe, train=True, transform=None, target_transform=None, cutmix=False, num_class=7):
-        self.root = root.lower()
+        self.root = root
         self.transform = transform
         self.target_transform = target_transform
         self.cutmix = cutmix
