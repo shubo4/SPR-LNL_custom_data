@@ -5,6 +5,7 @@ from collections import defaultdict
 from time import time
 
 import numpy as np
+import pandas as pd
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -16,6 +17,7 @@ from config import config
 from dataset import DatasetGenerator
 from models.spr import spr
 from utils import Logger, calculate_loss, evaluate, evaluate_top5, pNorm, rand_bbox, save_checkpoint, set_seed
+
 
 args = config()
 
@@ -30,7 +32,8 @@ if os.path.exists(args.save_dir) and args.overwrite:
     print('Existing log folder, move it to trashes!')
 writter = SummaryWriter(args.save_dir)
 
-data_loader = DatasetGenerator(data_path=os.path.join(args.root, args.dataset),
+data_loader = DatasetGenerator(dataframe = pd.read_csv(args.dataframe_path),
+                               data_path=os.path.join(args.root, args.dataset),
                                num_of_workers=args.num_workers,
                                seed=args.seed,
                                train_batch_size=args.batch_size,
