@@ -16,3 +16,4 @@ pca_dim : 10
 num_classes_sub : 7
 cutmix: 1
 cutmix_prob: 0.5
+resume : None #Path to model checkpoint
