@@ -1,5 +1,5 @@
 in_channels : 3
-num_classes : 7
+num_classes : 7 
 lr : 0.01
 weight_decay : 0.0005
 batch_size : 64
@@ -8,7 +8,7 @@ norm : 0.2
 lamb : 1.2
 freq : 1
 rho : 1.02
-backbone : 'res18'
+backbone : 'res50'
 optimizer : 'sgd'
 momentum : 0.9
 scheduler : 'cos'
@@ -17,3 +17,10 @@ num_classes_sub : 7
 cutmix: 1
 cutmix_prob: 0.5
 resume : None #Path to model checkpoint
+num_of_workers : 1
+tqdm : 1  
+root : /kaggle/input/extracting-attributes-from-fashion-images-jan-2024/train  # path to root images
+gpus : 1 
+dataset : custom 
+dataframe_path : /kaggle/input/extracting-attributes-from-fashion-images-jan-2024/train.csv # path to dataframe containing labels and image names
+save_dir : /kaggle/working # directory to save model checkpoint
