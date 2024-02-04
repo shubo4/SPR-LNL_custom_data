@@ -15,7 +15,7 @@ device = 'cuda:0' if torch.cuda.is_available()  else 'cpu'
 if args.seed is not None:
     set_seed(args.seed)
 
-data_loader = DatasetGenerator(dataframe = pd.read_csv(args.dataframe_path),
+data_loader = DatasetGenerator(dataframe = pd.read_csv(args.csv_path),
                                data_path= args.root ,#os.path.join(args.root, args.dataset),
                                num_of_workers=args.num_workers,
                                seed=args.seed,
