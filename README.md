@@ -26,8 +26,9 @@ Path to iamges folder : /Images/Image_train_00001, Image_train_00002
 ```
 ## Change custom.yaml 
 ```
+Arguments you shouuld change:
 root : put folder where your images are stored
-dataframe_path : put path to csv file containing image names and their labels
+csv_path : put path to csv file containing image names and their labels
 ```
 ## Pretrained Model
 The pretained models can be downloaded from [here](https://drive.google.com/drive/folders/1m0SDABpEcJotp1bnbYILP2KnAf2XGPwX?usp=sharing) and should be put in the folder **ckpt**.
