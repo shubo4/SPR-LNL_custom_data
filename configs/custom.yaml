@@ -19,7 +19,7 @@ cutmix_prob: 0.5
 #resume : None    #If you have pre-trained model you can give path to model checkpoint using resume
 num_of_workers : 1
 tqdm : 1  
-root : /kaggle/input/extracting-attributes-from-fashion-images-jan-2024/train  # path to root images
+#root : /kaggle/input/extracting-attributes-from-fashion-images-jan-2024/train  # path to root images
 gpus : 1 
 csv_path : /kaggle/input/extracting-attributes-from-fashion-images-jan-2024/train.csv # path to dataframe containing labels and image names
 save_dir : /kaggle/working # directory to save model checkpoint
