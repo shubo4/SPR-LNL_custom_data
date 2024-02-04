@@ -43,11 +43,9 @@ python scripts/custom_train.py
 ```
 
 ## Evaluation
-Example evaluation commands are listed in the folder **scripts**.
-Example training commands are listed in the folder **scripts**.
-You could try the following commands as a start.
+Example evaluation commands are listed in the folder **scripts**. Modify scripts/custom_eval.py , change the resume checkpoint to your trained model path. 
 
-Train SPR on Custom data:
+Eval SPR on Custom data:
 ```
 python scripts/custom_eval.py
 ```
