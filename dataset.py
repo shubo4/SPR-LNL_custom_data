@@ -64,7 +64,7 @@ def mislabel(y, noise_type, noise_rate, noise_pairs=None, seed=None):
 
 class DatasetGenerator():
     def __init__(self,
-                 csv_path,
+                 dataframe,
                  train_batch_size=128,
                  eval_batch_size=256,
                  data_path='data/',
@@ -85,7 +85,7 @@ class DatasetGenerator():
         self.noise_rate = noise_rate
         self.dataset = dataset
         self.noise_type = noise_type
-        self.dataframe = pd.read_csv(csv_path)
+        self.dataframe = dataframe
         self.data_loaders = self.loadData()
 
     def getDataLoader(self):
