@@ -21,6 +21,5 @@ num_of_workers : 1
 tqdm : 1  
 root : /kaggle/input/extracting-attributes-from-fashion-images-jan-2024/train  # path to root images
 gpus : 1 
-dataset : custom 
 csv_path : /kaggle/input/extracting-attributes-from-fashion-images-jan-2024/train.csv # path to dataframe containing labels and image names
 save_dir : /kaggle/working # directory to save model checkpoint
