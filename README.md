@@ -39,9 +39,15 @@ You could try the following commands as a start.
 
 Train SPR on Custom data:
 ```
-python scripts/custom.py
+python scripts/custom_train.py
 ```
 
 ## Evaluation
 Example evaluation commands are listed in the folder **scripts**.
+Example training commands are listed in the folder **scripts**.
 You could try the following commands as a start.
+
+Train SPR on Custom data:
+```
+python scripts/custom_eval.py
+```
