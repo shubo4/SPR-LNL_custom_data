@@ -26,7 +26,7 @@ Path to iamges folder : /Images/Image_train_00001, Image_train_00002
 ```
 ## Change custom.yaml 
 ```
-Arguments you shouuld change:
+Arguments you should change:
 root : put folder where your images are stored
 csv_path : put path to csv file containing image names and their labels
 ```
