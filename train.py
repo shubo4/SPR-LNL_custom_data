@@ -25,7 +25,10 @@ device = 'cuda:0' if torch.cuda.is_available()  else 'cpu'
 
 if args.seed is not None:
     set_seed(args.seed)
-
+    
+if not os.path.exists(args.save_dir):
+    os.mkdir(args.save_dir)
+    
 if os.path.exists(args.save_dir) and args.overwrite:
     os.system('rsync -a {0} logs/trashes/ && rm -r {0}'.format(args.save_dir))
     print('Existing log folder, move it to trashes!')
